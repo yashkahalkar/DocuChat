@@ -40,7 +40,7 @@ def setup_vectorstore(text_chunks: list[str], index_name: str, embeddings):
     This function will clear any existing data in the index to ensure
     we are only querying the most recently uploaded PDF.
     """
-    pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
+    pc = Pinecone(api_key=st.secrets["PINECONE_API_KEY"])
     
     if index_name in pc.list_indexes().names():
         st.write(f"Clearing existing index '{index_name}'...")
@@ -91,7 +91,7 @@ def create_rag_chain(index_name: str, embeddings):
     Answer:
     """
     prompt = ChatPromptTemplate.from_template(prompt_template)
-    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.3)
+    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.3, google_api_key=st.secrets["GOOGLE_API_KEY"])
 
     rag_chain = (
         RunnablePassthrough.assign(
@@ -109,10 +109,6 @@ def create_rag_chain(index_name: str, embeddings):
 st.set_page_config(page_title="RAG PDF Q&A", layout="wide")
 st.title("📄 PDF Q&A with Gemini & Pinecone")
 st.markdown("Upload a PDF and ask questions about its content. The bot will use the document to answer.")
-
-if not os.getenv("GOOGLE_API_KEY") or not os.getenv("PINECONE_API_KEY"):
-    st.error("🚨 Missing API keys. Please add `GOOGLE_API_KEY` and `PINECONE_API_KEY` to your `.env` file.")
-    st.stop()
 
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
@@ -133,7 +129,7 @@ with st.sidebar:
                     st.stop()
                 
                 index_name = "rag-pdf-qa" 
-                embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+                embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=st.secrets["GOOGLE_API_KEY"])
                 
                 setup_vectorstore(chunks, index_name, embeddings)
                 
@@ -169,4 +165,5 @@ if question:
                 })
                 st.markdown(response)
         
+
         st.session_state.chat_history.append((question, response))
