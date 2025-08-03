@@ -8,7 +8,7 @@ Built with **Streamlit**, it offers an intuitive web interface for real-time doc
 
 ## 🚀 Live Demo
 
-👉 [Launch the App]([https://your-username-your-repo.streamlit.app](https://docuchat-fsj483xk5zefo9s5ccxdl6.streamlit.app/))
+👉 [Launch the App](https://docuchat-fsj483xk5zefo9s5ccxdl6.streamlit.app/)
 
 > *Hosted on Streamlit Cloud — no setup required.*
 
