@@ -89,4 +89,6 @@ Built with **Streamlit**, it offers an intuitive web interface for real-time doc
     │ Response Displayed │ ← Streamlit
     └────────────────────┘
 
+don't forget to star thsi project if you like it ⭐
+
 Made with 💻 by Yash Kahalkar, Email: kahalkaryash@gmail.com 
